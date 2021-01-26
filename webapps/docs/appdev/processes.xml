@@ -83,40 +83,24 @@ be using.  The directory structure is described in <a href="source.html">the
 previous section</a>, or you can use the
 <a href="sample/">sample application</a> as a starting point.</p>
 
-<p>Create your project source directory, and define it within your CVS
-repository.  This might be done by a series of commands like this, where
-<code>{project}</code> is the name under which your project should be
-stored in the CVS repository, and {username} is your login username:</p>
+<p>Create your project source directory.
+This might be done by a series of commands like this:</p>
 <source><![CDATA[cd {my home directory}
 mkdir myapp <-- Assumed "project source directory"
 cd myapp
 mkdir docs
 mkdir src
 mkdir web
-mkdir web/WEB-INF
-cvs import -m "Initial Project Creation" {project} \
-    {username} start]]></source>
+mkdir web/WEB-INF]]></source>
 
-<p>Now, to verify that it was created correctly in CVS, we will perform a
-checkout of the new project:</p>
-<source><![CDATA[cd ..
-mv myapp myapp.bu
-cvs checkout {project}]]></source>
-
-<p>Next, you will need to create and check in an initial version of the
+<p>Next, you will need to create an initial version of the
 <code>build.xml</code> script to be used for development.  For getting
 started quickly and easily, base your <code>build.xml</code> on the
 <a href="build.xml.txt">basic build.xml file</a>, included with this manual,
 or code it from scratch.</p>
 <source><![CDATA[cd {my home directory}
 cd myapp
-emacs build.xml     <-- if you want a real editor :-)
-cvs add build.xml
-cvs commit]]></source>
-
-<p>Until you perform the CVS commit, your changes are local to your own
-development directory.  Committing makes those changes visible to other
-developers on your team that are sharing the same CVS repository.</p>
+emacs build.xml     <-- if you want a real editor :-)]]></source>
 
 <p>The next step is to customize the Ant <em>properties</em> that are
 named in the <code>build.xml</code> script.  This is done by creating a
@@ -136,18 +120,12 @@ catalina.home=/usr/local/apache-tomcat-<version-major-minor/>
 manager.username=myusername
 manager.password=mypassword</source>
 
-<p>In general, you will <strong>not</strong> want to check the
-<code>build.properties</code> file in to the CVS repository, because it
-is unique to each developer's environment.</p>
-
 <p>Now, create the initial version of the web application deployment
 descriptor.  You can base <code>web.xml</code> on the
 <a href="web.xml.txt">basic web.xml file</a>, or code it from scratch.</p>
 <source><![CDATA[cd {my home directory}
 cd myapp/web/WEB-INF
-emacs web.xml
-cvs add web.xml
-cvs commit]]></source>
+emacs web.xml]]></source>
 
 Note that this is only an example web.xml file.  The full definition
 of the deployment descriptor file is in the
@@ -164,35 +142,18 @@ As described in <a href="source.html">Source Organization</a>, newly created
 source files should be located in the appropriate subdirectory, under your
 project source directory.</p>
 
-<p>Whenever you wish to refresh your development directory to reflect the
-work performed by other developers, you will ask CVS to do it for you:</p>
-<source><![CDATA[cd {my home directory}
-cd myapp
-cvs update -dP]]></source>
 
-<p>To create a new file, go to the appropriate directory, create the file,
-and register it with CVS.  When you are satisfied with it's contents (after
-building and testing is successful), commit the new file to the repository.
-For example, to create a new JSP page:</p>
+<p>To create a new JSP page:</p>
 <source><![CDATA[cd {my home directory}
 cd myapp/web        <-- Ultimate destination is document root
 emacs mypage.jsp
-cvs add mypage.jsp
-... build and test the application ...
-cvs commit]]></source>
+... build and test the application ...]]></source>
 
 <p>Java source code that is defined in packages must be organized in a
 directory hierarchy (under the <strong>src/</strong> subdirectory) that
 matches the package names.  For example, a Java class named
 <code>com.mycompany.mypackage.MyClass.java</code> should be stored in file
-<code>src/com/mycompany/mypackage/MyClass.java</code>.
-Whenever you create a new subdirectory, don't forget to
-register it with CVS.</p>
-
-<p>To edit an existing source file, you will generally just start editing
-and testing, then commit the changed file when everything works.  Although
-CVS can be configured to required you to "check out" or "lock" a file you
-are going to be modifying, this is generally not used.</p>
+<code>src/com/mycompany/mypackage/MyClass.java</code>.</p>
 
 </subsection>
 
@@ -206,7 +167,7 @@ the project source directory, so that only the last command is needed):</p>
 cd myapp        <-- Normally leave a window open here
 ant]]></source>
 
-<p>The Ant tool will be execute the default "compile" target in your
+<p>The Ant tool will execute the default "compile" target in your
 <code>build.xml</code> file, which will compile any new or updated Java
 code.  If this is the first time you compile after a "build clean",
 it will cause everything to be recompiled.</p>
